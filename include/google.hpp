@@ -10,6 +10,7 @@ namespace googletrans {
         public:
         GoogleTranslator(const std::string& from, const std::string& to);
         std::string translate(const std::string& text);
+        std::string translateFile(const std::string& path);
 
         private:
         std::string m_from;

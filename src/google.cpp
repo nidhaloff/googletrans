@@ -6,7 +6,6 @@
 #include "constants.hpp"
 #include "google.hpp"
 
-
 namespace googletrans {
 
     GoogleTranslator::GoogleTranslator(const std::string& from, const std::string& to)
@@ -40,5 +39,21 @@ namespace googletrans {
         auto endHtmlIdx = body.find(constants::END_PATTERN);
         const std::string translation = body.substr(0, endHtmlIdx);
         return translation;
+    }
+
+    std::string GoogleTranslator::translateFile(const std::string& path) {
+        std::ifstream file(path);
+        if (file.is_open()) {
+            std::string content( 
+                (std::istreambuf_iterator<char>(file) ),
+                (std::istreambuf_iterator<char>()    ) 
+            );
+
+            return translate(content);
+        }
+        // file cannot be open
+        else {
+            throw std::runtime_error("File could not be open!");
+        }
     }
 }
