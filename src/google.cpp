@@ -3,6 +3,7 @@
 
 #include <cpr/cpr.h>
 
+#include <algorithm>
 #include "constants.hpp"
 #include "google.hpp"
 
@@ -55,5 +56,19 @@ namespace googletrans {
         else {
             throw std::runtime_error("File could not be open!");
         }
+    }
+
+
+    std::vector<std::string> 
+    GoogleTranslator::translateBatch(const std::vector<std::string>& text_array)
+    {
+        std::cout << "start batch\n";
+        std::vector<std::string> res;
+        std::for_each(std::begin(text_array), std::end(text_array), [&](const std::string& text){
+            res.push_back(translate(text));
+        });
+
+        std::cout << "foreach done\n";
+        return res;
     }
 }
